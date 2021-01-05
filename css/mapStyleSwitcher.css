@@ -1,0 +1,59 @@
+.map-style {
+  position: fixed;
+  top: 20px;
+  right: 0;
+  z-index: 1;
+  background-color: #ffffff;
+  padding: 15px;
+  border: 1px solid #d4d4e3;
+  border-right: none;
+  border-radius: 0 0 0 5px;
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  transform: translateX(100%);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.map-style.open {
+  -webkit-transform: translateX(0%);
+  -moz-transform: translateX(0%);
+  -o-transform: translateX(0%);
+  transform: translateX(0%);
+}
+
+.map-style h5 {
+  font-size: 16px;
+  color: #302e4d;
+  margin-top: 0;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e8dfec;
+}
+
+.map-style input {
+  cursor: pointer;
+}
+
+.map-style .toggle-map-style {
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  background: #ffffff;
+  left: -47px;
+  top: 0;
+  border: 1px solid #d4d4e3;
+  border-right: none;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px 0 0 5px;
+}
+
+.map-style .toggle-map-style .fa {
+  font-size: 20px;
+  line-height: 43px;
+}

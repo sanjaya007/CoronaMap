@@ -1,0 +1,1020 @@
+@import url("https://fonts.googleapis.com/css2?family=Iceland&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#loading {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: #000000 url(../img/spinner.gif) center no-repeat;
+  z-index: 999999;
+}
+
+#map {
+  width: 100vw;
+  height: 100vh;
+}
+
+.marker {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  /* background: url(../img/dot.png)center/contain no-repeat; */
+  background-color: rgb(255, 0, 0);
+  width: 10px;
+  height: 10px;
+  animation: pulsating 1s ease infinite;
+}
+
+@keyframes pulsating {
+  0% {
+    box-shadow: 0 2px 5px #832323;
+  }
+  50% {
+    box-shadow: 0 2px 5px #832323, 0 2px 5px #832323;
+  }
+  75% {
+    box-shadow: 0 2px 5px #832323, 0 2px 5px #832323, 0 2px 5px #832323,
+      0 2px 5px #832323;
+  }
+  100% {
+    box-shadow: 0 2px 5px #832323, 0 2px 5px #832323;
+  }
+}
+
+.popUp {
+  position: fixed;
+  background-color: #252627;
+  padding: 0 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  border-top-left-radius: 0;
+  text-align: center;
+  font-family: "Iceland", cursive;
+  display: none;
+}
+
+@keyframes pop {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes popEnd {
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  0% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.popUp h1 {
+  color: #cecece;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+}
+
+.popUp p {
+  color: #a5a5a5;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 0.8rem;
+  padding-top: 0.2rem;
+}
+
+.popUp .imageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.popUp .totalConfirmed {
+  background-color: rgb(46, 46, 27);
+  padding: 0.3rem 0.7rem;
+}
+
+.popUp .totalDeath {
+  background-color: rgb(54, 35, 35);
+  padding: 0.3rem 0.7rem;
+}
+
+.popUp .totalRecovered {
+  background-color: rgb(35, 49, 35);
+  padding: 0.3rem 0.7rem;
+}
+
+.popUp .caret {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+}
+
+.all-report {
+  position: fixed;
+  box-sizing: border-box;
+  padding: 1rem;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 20vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  font-family: "Iceland", cursive;
+}
+
+.all-report .global-confirmed {
+  background-color: #252627;
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+  padding: 1rem 0;
+  box-shadow: inset 0 0 10px #797979;
+  color: #afafaf;
+}
+
+.all-report .death-recovered {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding: 1rem 0;
+  font-size: 1.9rem;
+  width: 100%;
+  color: #a5a5a5;
+}
+
+.global-death,
+.global-recovered {
+  width: 40%;
+  text-align: center;
+  background-color: #252627;
+  padding: 0.5rem 0.5rem;
+  margin: 0 1rem;
+}
+
+.global-death {
+  box-shadow: inset 0 0 10px red;
+}
+
+.global-recovered {
+  box-shadow: inset 0 0 10px green;
+}
+
+.global-death::after,
+.global-recovered::after {
+  content: "Total Deaths";
+  display: flex;
+  justify-content: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+  color: #5d5d5d;
+}
+
+.global-recovered::after {
+  content: "Total Recovered";
+}
+
+.search-container {
+  margin: 0 auto 1rem;
+}
+
+.search-container input[type="text"] {
+  padding: 0.5rem 1rem;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #252627;
+  outline: none;
+  color: #a5a5a5;
+}
+
+.search-container button {
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #000000;
+  font-size: 17px;
+  border: none;
+  color: #afafaf;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #252627;
+}
+
+.all-countries {
+  overflow: auto;
+}
+
+.country {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #232222;
+  cursor: pointer;
+  border-bottom: 1px solid #111111;
+  overflow: auto;
+}
+
+.country-name,
+.country-flag,
+.country-report {
+  pointer-events: none;
+}
+
+.country .country-flag {
+  padding-left: 1rem;
+}
+
+.country .country-name {
+  color: #a5a5a5;
+  font-size: 0.7rem;
+}
+
+.country .country-report {
+  color: #9e841d;
+  padding-right: 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.1rem;
+}
+
+.country:active {
+  background-color: #151616;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #252627;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.corona-pop {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 20vw;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  padding: 1rem;
+  font-family: "Iceland", cursive;
+  display: none;
+}
+
+.corona-pop.show {
+  display: flex;
+}
+
+.corona-pop .country-details {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #222222;
+}
+
+.corona-pop .country-details .name-pop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+  color: #a5a5a5;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+}
+
+.corona-pop .country-report {
+  display: flex;
+  justify-content: space-between;
+  color: #a5a5a5;
+  margin-top: 1rem;
+}
+
+@keyframes leftPop {
+  0% {
+    transform: translateX(5px);
+    opacity: 0;
+  }
+  25% {
+    transform: translateX(10px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(15px);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateX(10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes opacityEnd {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes coronaPopEnd {
+  100% {
+    transform: translateX(5px);
+    opacity: 0;
+  }
+  75% {
+    transform: translateX(10px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(15px);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translateX(10px);
+    opacity: 0.8;
+  }
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.corona-pop .caret-left {
+  position: absolute;
+  top: calc(50% - 25px);
+  left: -30px;
+  height: 50px;
+  width: 50px;
+  color: #000000;
+}
+
+.total-pop,
+.new-pop {
+  width: 50%;
+  text-align: center;
+  margin: 0 1rem;
+}
+
+.total-pop h1,
+.new-pop h1 {
+  font-size: 1.8rem;
+}
+
+.total-pop p,
+.new-pop p {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+.total-pop #totalCases {
+  box-shadow: 0 0 10px wheat;
+}
+.total-pop #totalDeathsCase {
+  box-shadow: 0 0 10px red;
+}
+.total-pop #totalRecoveredCase {
+  box-shadow: 0 0 10px green;
+}
+
+.new-pop p {
+  color: #fff;
+}
+.new-pop #newConfirmed {
+  background-color: rgb(187, 168, 132);
+  color: #000000;
+}
+.new-pop #newDeaths {
+  background-color: rgb(172, 0, 0);
+}
+.new-pop #newRecovered {
+  background-color: rgb(1, 82, 1);
+}
+
+.report-index {
+  margin-top: 2rem;
+}
+
+.wheat,
+.red,
+.green {
+  box-sizing: border-box;
+  padding: 0.4rem;
+  width: 5px;
+  height: 5px;
+  margin: 0.2rem 1rem;
+}
+
+.index-sign .wheat {
+  background-color: rgb(187, 168, 132);
+}
+.index-sign .red {
+  background-color: rgb(172, 0, 0);
+}
+.index-sign .green {
+  background-color: rgb(1, 82, 1);
+}
+
+.report-index #index {
+  margin: 0 1rem 0.5rem;
+  width: 32px;
+  color: #cecece;
+  border-bottom: 0.1px solid #333;
+}
+
+.index-sign {
+  display: flex;
+  color: #a5a5a5;
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+/* Light-Body_Style */
+
+body.light .popUp {
+  background-color: #ffffff;
+}
+
+body.light .popUp h1 {
+  color: #252627;
+}
+
+body.light .popUp p {
+  color: #252627;
+}
+
+body.light .popUp .totalConfirmed {
+  background-color: rgb(233, 233, 183);
+}
+
+body.light .popUp .totalDeath {
+  background-color: rgb(233, 178, 178);
+}
+
+body.light .popUp .totalRecovered {
+  background-color: rgb(187, 235, 187);
+}
+
+body.light .all-report {
+  background-color: #ffffff9b;
+}
+
+body.light .all-report .global-confirmed {
+  background-color: #cfcfcf;
+  box-shadow: inset 0 0 10px black;
+  color: #252627;
+}
+
+body.light .all-report .death-recovered {
+  color: #252627;
+}
+
+body.light .global-death,
+body.light .global-recovered {
+  background-color: #cfcfcf;
+}
+
+body.light .search-container input[type="text"] {
+  background-color: #cfcfcf;
+  color: #252627;
+}
+
+body.light .search-container button {
+  background: #cfcfcf;
+  color: #252627;
+}
+
+body.light .search-container button:hover {
+  background: #ffffff;
+}
+
+body.light .country {
+  background-color: #cfcfcf;
+  border-bottom: 1px solid #ffffff;
+}
+
+body.light .country .country-name {
+  color: #252627;
+}
+
+body.light .country .country-report {
+  color: rgb(255, 81, 0);
+}
+
+body.light .country:active {
+  background-color: #ffffff;
+}
+
+/* Track */
+body.light ::-webkit-scrollbar-track {
+  background: #a5a5a5;
+}
+
+/* Handle */
+body.light ::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+}
+
+/* Handle on hover */
+body.light ::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+
+body.light .corona-pop {
+  background-color: #ffffffea;
+}
+
+body.light .corona-pop .country-details {
+  border-bottom: 1px solid #b9b9b9;
+}
+
+body.light .corona-pop .country-details .name-pop {
+  color: #252627;
+}
+
+body.light .corona-pop .country-report {
+  color: #252627;
+}
+
+body.light .report-index #index {
+  color: #252627;
+}
+
+body.light .index-sign {
+  color: #252627;
+}
+
+body.light .total-pop #totalCases {
+  box-shadow: 0 0 10px rgb(255, 166, 0);
+}
+body.light .total-pop #totalDeathsCase {
+  box-shadow: 0 0 10px red;
+}
+body.light .total-pop #totalRecoveredCase {
+  box-shadow: 0 0 10px green;
+}
+
+body.light .new-pop #newConfirmed {
+  background-color: rgb(236, 212, 167);
+  color: #000000;
+}
+body.light .new-pop #newDeaths {
+  background-color: rgb(214, 64, 64);
+}
+body.light .new-pop #newRecovered {
+  background-color: rgb(62, 212, 62);
+}
+
+body.light .index-sign .wheat {
+  background-color: rgb(236, 212, 167);
+}
+body.light .index-sign .red {
+  background-color: rgb(214, 64, 64);
+}
+body.light .index-sign .green {
+  background-color: rgb(62, 212, 62);
+}
+
+/* Responsive */
+
+.lowEndDevices {
+  display: none;
+  font-family: "Iceland", cursive;
+  position: fixed;
+}
+
+@media screen and (max-width: 1700px) {
+  .all-report {
+    padding: 0.5rem;
+    width: 20vw;
+  }
+
+  .all-report .global-confirmed {
+    font-size: 2.5rem;
+    padding: 0.7rem 0;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .all-report .death-recovered {
+    margin-top: 0.7rem;
+    padding: 0.5rem 0;
+    font-size: 1.6rem;
+  }
+
+  .global-death,
+  .global-recovered {
+    padding: 0.5rem 0.5rem;
+    margin: 0 0.7rem;
+  }
+
+  .global-death::after,
+  .global-recovered::after {
+    font-size: 0.7rem;
+  }
+
+  .country .country-flag {
+    padding-left: 0.5rem;
+  }
+
+  .country .country-name {
+    font-size: 0.65rem;
+  }
+
+  .country .country-report {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .search-container {
+    display: flex;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 17px;
+  }
+
+  .search-container button {
+    font-size: 17px;
+  }
+
+  .corona-pop {
+    width: 23vw;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .country .country-name {
+    font-size: 0.58rem;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 15px;
+  }
+
+  .search-container button {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .all-report {
+    padding: 0.5rem;
+    width: 20vw;
+  }
+
+  .country .country-name {
+    font-size: 0.5rem;
+  }
+
+  .corona-pop {
+    width: 25vw;
+  }
+
+  .corona-pop .country-details .name-pop {
+    padding: 0 1rem;
+    font-size: 2rem;
+    letter-spacing: 0.05rem;
+  }
+
+  .total-pop h1,
+  .new-pop h1 {
+    font-size: 1.7rem;
+  }
+
+  .total-pop p,
+  .new-pop p {
+    font-size: 1.5rem;
+    padding: 0.3rem;
+    margin-top: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .all-report {
+    padding: 0.5rem;
+    width: 22.1vw;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .all-report {
+    padding: 0.3rem;
+    width: 24.8vw;
+  }
+
+  .all-report .global-confirmed {
+    font-size: 2.3rem;
+    padding: 0.6rem 0;
+    width: 90%;
+  }
+
+  .all-report .death-recovered {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .all-report {
+    padding: 0.1rem;
+    width: 26.6vw;
+  }
+
+  .corona-pop {
+    width: 27vw;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .all-report {
+    padding: 0.05rem;
+    width: 29vw;
+  }
+
+  .all-report .global-confirmed {
+    font-size: 2.2rem;
+  }
+
+  .all-report .death-recovered {
+    font-size: 1.4rem;
+  }
+
+  .country .country-name {
+    font-size: 0.5rem;
+  }
+
+  .country .country-report {
+    font-size: 0.7rem;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 15px;
+    width: 100%;
+  }
+
+  .search-container button {
+    font-size: 15px;
+  }
+
+  .corona-pop {
+    width: 29vw;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .all-report {
+    padding: 0.05rem;
+    width: 40vw;
+  }
+
+  .corona-pop {
+    width: 40vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .all-report {
+    padding: 0.05rem;
+    width: 47vw;
+  }
+
+  .global-death::after,
+  .global-recovered::after {
+    font-size: 0.5rem;
+  }
+
+  .corona-pop {
+    width: 45vw;
+  }
+
+  .all-report .global-confirmed {
+    font-size: 2rem;
+  }
+
+  .all-report .death-recovered {
+    font-size: 1rem;
+  }
+
+  .country .country-name {
+    font-size: 0.4rem;
+  }
+
+  .country .country-report {
+    font-size: 0.6rem;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 13px;
+  }
+
+  .search-container button {
+    font-size: 13px;
+  }
+
+  .corona-pop .country-details .name-pop {
+    padding: 0 0.5rem;
+    font-size: 1.3rem;
+    letter-spacing: 0.05rem;
+  }
+
+  .total-pop h1,
+  .new-pop h1 {
+    font-size: 1rem;
+  }
+
+  .total-pop p,
+  .new-pop p {
+    font-size: 1rem;
+    padding: 0.2rem;
+    margin-top: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .all-report {
+    padding: 0.05rem;
+    width: 70vw;
+  }
+
+  .corona-pop {
+    width: 70vw;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .all-report {
+    padding: 0.05rem;
+    width: 86vw;
+  }
+
+  .corona-pop {
+    width: 77vw;
+  }
+
+  .all-report .global-confirmed {
+    font-size: 1.5rem;
+  }
+
+  .all-report .death-recovered {
+    font-size: 0.8rem;
+  }
+
+  .country .country-name {
+    font-size: 0.35rem;
+  }
+
+  .country .country-report {
+    font-size: 0.55rem;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 10px;
+  }
+
+  .search-container button {
+    font-size: 10px;
+  }
+
+  .corona-pop .country-details .name-pop {
+    padding: 0 0.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.05rem;
+  }
+
+  .total-pop h1,
+  .new-pop h1 {
+    font-size: 0.8rem;
+  }
+
+  .total-pop p,
+  .new-pop p {
+    font-size: 0.7rem;
+    padding: 0.2rem;
+    margin-top: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 199px) {
+  .all-report {
+    padding: 0.05rem;
+    width: 91vw;
+  }
+
+  .corona-pop {
+    width: 91vw;
+  }
+
+  .all-report .global-confirmed {
+    font-size: 1rem;
+  }
+
+  .all-report .death-recovered {
+    font-size: 0.5rem;
+  }
+
+  .global-death::after,
+  .global-recovered::after {
+    display: none;
+  }
+
+  .country .country-name {
+    font-size: 0.1rem;
+  }
+
+  .country .country-report {
+    font-size: 0.1rem;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 5px;
+  }
+
+  .search-container button {
+    font-size: 5px;
+  }
+
+  .corona-pop .country-details .name-pop {
+    padding: 0 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.05rem;
+  }
+
+  .total-pop h1,
+  .new-pop h1 {
+    font-size: 0.7rem;
+  }
+
+  .total-pop p,
+  .new-pop p {
+    font-size: 0.5rem;
+    padding: 0.2rem;
+    margin-top: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 160px) {
+  #map {
+    display: none;
+  }
+
+  .all-report {
+    display: none;
+  }
+
+  .lowEndDevices {
+    display: block;
+  }
+
+  .map-style {
+    display: none;
+  }
+
+  .corona-pop {
+    display: none;
+  }
+
+  .corona-pop.show {
+    display: none;
+  }
+}

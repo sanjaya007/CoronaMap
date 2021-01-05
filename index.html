@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corona Map</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/mapStyleSwitcher.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    />
+  </head>
+  <body onload="getLoad()">
+    <div id="loading"></div>
+    <div id="map"></div>
+
+    <div class="popUp" id="popUp">
+      <img src="img/caretUp.png" alt="caret" class="caret" />
+      <div class="imageContainer">
+        <img src="" alt="flag" id="flag" />
+      </div>
+      <div class="totalConfirmed">
+        <h1>Total Confirmed</h1>
+        <p id="tc">Updating...</p>
+      </div>
+      <div class="totalDeath">
+        <h1>Total Death</h1>
+        <p id="td">Updating...</p>
+      </div>
+      <div class="totalRecovered">
+        <h1>Total Recovered</h1>
+        <p id="tr">Updating...</p>
+      </div>
+    </div>
+
+    <div class="all-report">
+      <div class="global-confirmed">Updating...</div>
+      <div class="death-recovered">
+        <div class="global-death">Updating...</div>
+        <div class="global-recovered">Updating...</div>
+      </div>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchKeyword"
+          autocomplete="off"
+          placeholder="Search.."
+          name="search"
+        />
+        <button type="button"><i class="fa fa-search"></i></button>
+      </div>
+
+      <div class="all-countries">
+        <!-- <div class="country">
+                <div class="country-flag">
+                    <img src="https://www.countryflags.io/np/flat/64.png" alt="flag">
+                </div>
+                <div class="country-name">
+                    <h1 id="countryName"> Nepal </h1>
+                </div>
+                <div class="country-report">
+                    <h3 id="countryReport"> 11,764 </h3>
+                </div>
+            </div> -->
+      </div>
+    </div>
+
+    <div class="corona-pop show" id="coronaPop">
+      <div class="country-details">
+        <div class="pop-flag">
+          <img id="pop-flag-img" src="" alt="flag" />
+        </div>
+        <div class="name-pop" id="namePop"></div>
+      </div>
+
+      <div class="country-report">
+        <div class="total-pop">
+          <h1>Total</h1>
+          <p id="totalCases"></p>
+          <p id="totalDeathsCase"></p>
+          <p id="totalRecoveredCase"></p>
+        </div>
+        <div class="new-pop">
+          <h1>New</h1>
+          <p id="newConfirmed"></p>
+          <p id="newDeaths"></p>
+          <p id="newRecovered"></p>
+        </div>
+      </div>
+
+      <div class="report-index">
+        <p id="index">Index:</p>
+        <div class="index-sign">
+          <div class="wheat"></div>
+          <p>Confirmed Case</p>
+        </div>
+        <div class="index-sign">
+          <div class="red"></div>
+          <p>Death Case</p>
+        </div>
+        <div class="index-sign">
+          <div class="green"></div>
+          <p>Recovered Case</p>
+        </div>
+      </div>
+      <img
+        src="./img/caretLeft.png"
+        alt="caret"
+        class="caret-left"
+        id="caretLeft"
+      />
+    </div>
+
+    <!-- Style-Switcher -->
+    <div class="map-style">
+      <div class="toggle-map-style">
+        <i class="fa fa-cog fa-spin"></i>
+      </div>
+      <h5>Map Styles</h5>
+      <label for="streets-v11">
+        <input type="radio" id="streets-v11" name="rtoggle" value="streets" />
+        Streets </label
+      ><br />
+      <label for="light-v10">
+        <input type="radio" id="light-v10" name="rtoggle" value="light" />
+        Light </label
+      ><br />
+      <label for="dark-v10">
+        <input
+          type="radio"
+          id="dark-v10"
+          name="rtoggle"
+          value="dark"
+          checked="checked"
+        />
+        Dark </label
+      ><br />
+      <label for="outdoors-v11">
+        <input type="radio" id="outdoors-v11" name="rtoggle" value="outdoors" />
+        Outdoors </label
+      ><br />
+      <label for="satellite-v9">
+        <input
+          type="radio"
+          id="satellite-v9"
+          name="rtoggle"
+          value="satellite"
+        />
+        Satellite </label
+      ><br />
+    </div>
+    <!-- Style Switcher Ends -->
+
+    <!-- For low end device -->
+    <div class="lowEndDevices">
+      <h1>Sorry !</h1>
+      <br />
+      <h1>Your</h1>
+      <br />
+      <h1>Device</h1>
+      <br />
+      <h1>Can't</h1>
+      <br />
+      <h1>Support</h1>
+      <br />
+      <h1>This</h1>
+      <br />
+      <h1>Map !</h1>
+      <br />
+    </div>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <script src="js/compose.js"></script>
+    <script src="js/latLongData.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/mapStyleSwitcher.js"></script>
+  </body>
+</html>
