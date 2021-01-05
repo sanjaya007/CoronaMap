@@ -29,7 +29,7 @@ var coronaData = null;
 
 const fetchData = async () => {
   try {
-    const response = await fetch("http://api.covid19api.com/summary");
+    const response = await fetch("https://api.covid19api.com/summary");
     const data = await response.json();
     console.log(data);
     coronaData = data.Countries;
